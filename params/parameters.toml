@@ -3,8 +3,8 @@
 ### Changing the numbers may make the builder crash / hang / produce broken shapes.
 
 [iosevka]
-naming.copyright = 'Copyright (c) 2015-2020 Belleve Invis.'
-naming.licence = '''This font software is licenced under the SIL Open Font Licence, Version 1.1. This is licence is avaliable with a FAQ at: http://scripts.sil.org/OFL. This font software is distributes on an 'AS IS' basis, without warranties or conditions of any kind, either express or implied. See the SIL Open Font licence fot the specific language, premissions and limitations governing your use of this font software.'''
+naming.copyright = 'Copyright 2015-2021, Renzhi Li (aka. Belleve Invis, belleve@typeof.net).'
+naming.licence = '''This font software is licenced under the SIL Open Font Licence, Version 1.1. This is licence is available with a FAQ at: http://scripts.sil.org/OFL. This font software is distributed on an 'AS IS' basis, without warranties or conditions of any kind, either express or implied. See the SIL Open Font licence for the specific language, permissions and limitations governing your use of this font software.'''
 naming.manufacturer = 'Belleve Invis'
 naming.designer = 'Belleve Invis'
 naming.description = 'Spatial efficient monospace font family for programming. Built from code. http://be5invis.github.io/Iosevka'
@@ -17,7 +17,7 @@ xheight = 530      # X-height.
 winMetricAscenderPad  = 0 # Padding of Win ascnder metrics to avoid clipping. See #343
 winMetricDescenderPad = 0 # Padding of Win descender metrics to avoid clipping. See #343
 
-SymbolMid = 340    # Center of parens, maths, geometrics...
+symbolMid = 340    # Center of parens, maths, geometrics...
 parenSize = 966    # Size of parens, brackets, braces, slashes, etc.
 operSize = 0.80    # Size of mathematical operators (cups, etc.)
 tackSize = 0.80    # Size of logical operators (tacks, etc.)
@@ -26,16 +26,17 @@ plusSize = 0.52    # Size of plus and arith symbols
 pictSize = 1.10    # Size of pictograms
 arrowHeight = 1.50 # Height of arrows
 
-contrast = 1.11111 # Stroke width contrast.
-
 slopeAngle = 0     # slope angle, in degrees.
+derivedSlopeAngle = 10 # Slope angle of derived letters requiring italics
 
-accent = 155       # Height of accent marks.
-accentx = 200      # Width of accent marks.
-overshoot = -8     # Vertical overshoot for arcs.
-overshootx = -8    # Horizontal overshoot for arcs.
-oxhook = -2        # Horizontal overshoot for hook tips.
-fovershoot = -40   # Overshoot of the top end of italic `f`.
+accent = 155            # Height of accent marks.
+accentx = 200           # Width of accent marks.
+accentBaseOffset = 54   # Offset of accent marks to the base.
+accentStackOffset = 160 # Offset when accent marks stack.
+overshoot = -8          # Vertical overshoot for arcs.
+overshootx = -8         # Horizontal overshoot for arcs.
+oxhook = -2             # Horizontal overshoot for hook tips.
+fovershoot = -40        # Overshoot of the top end of italic `f`.
 
 shoulderfineMin = 0.8
 
@@ -59,231 +60,58 @@ enableLigation = true
 # Excluded code points
 excludedCharRanges = []
 
+# Slab level -- Set to 0 by default
+#  - 0  : Sans
+#  - 1  : TODO
+#  - 2+ : Full     (3.x)
+slab = 0
+
+# Old style number height
+onumZeroHeightRatio = 1.145
+
+# Reset diversity
+diversityM  = 1
+diversityF  = 1
+diversityI  = 1
+diversityII = 1
+
 [verbose]
 verbose = true
 
 ###### Slab variant
-[slab]
-slab = true
+[serifs-slab]
+slab = 2
 
 ###### Spacings
 # Terminal variant
-[sp-term]
+[spacing-term]
 spacing = 0
 
 # "FontFonfig Monospace"
-[sp-force-monospace]
+[spacing-fontconfig-mono]
 spacing = 0
 forceMonospace = true
 
 # Fixed variant
-[sp-fixed]
+[spacing-fixed]
 spacing = 0
 enableLigation = false
 forceMonospace = true
 
-###### Disabling Ligation
-[no-ligation]
-enableLigation = false
-[nolig] # For compatibility
-enableLigation = false
-
-###### Disabling CV/SS
-[no-cv-ss]
-enableCvSs = false
+# Quasi-proportional
+[spacing-quasi-proportional]
+spacing = 3
+isQuasiProportional = true
+diversityM  = 1.25
+diversityF  = 0.75
+diversityI  = 0.75
+diversityII = 0.50
 
 ###### Slopes
 [s-italic]
 isItalic = true
-slopeAngle = 10
-jhook = 120
+slopeAngle = 9.4
 
 [s-oblique]
 isOblique = true
-slopeAngle = 10
-jhook = 120
-
-###### Diversity
-[diversity-0]
-diversityM = 1
-diversityF = 1
-diversityI = 1
-diversityII = 1
-
-[diversity-1]
-diversityM = 1.25
-diversityF = 1.00
-diversityI = 0.75
-diversityII = 0.75
-
-[diversity-2]
-diversityM = 1.25
-diversityF = 0.75
-diversityI = 0.75
-diversityII = 0.5
-
-###################################################################################################
-### Metric-override hives
-### These hives are now discouraged in favor of 'metric-override' in build plans but they are
-### still supported in version 3.x.
-
-###### Leading
-[leading-750]
-leading = 750
-[leading-1000]
-leading = 1000
-[leading-1250]
-leading = 1250
-[leading-1500]
-leading = 1500
-[leading-1750]
-leading = 1750
-[leading-2000]
-leading = 2000
-
-###### Win metric pad
-[win-metric-pad-0]
-winMetricAscenderPad = 0
-winMetricDescenderPad = 0
-[win-metric-pad-50]
-winMetricAscenderPad = 50
-winMetricDescenderPad = 50
-[win-metric-pad-100]
-winMetricAscenderPad = 100
-winMetricDescenderPad = 100
-[win-metric-pad-150]
-winMetricAscenderPad = 150
-winMetricDescenderPad = 150
-[win-metric-pad-200]
-winMetricAscenderPad = 200
-winMetricDescenderPad = 200
-[win-metric-pad-250]
-winMetricAscenderPad = 250
-winMetricDescenderPad = 250
-[win-metric-pad-300]
-winMetricAscenderPad = 300
-winMetricDescenderPad = 300
-
-###### Powerline
-[powerline-scale-y-750]
-powerlineScaleY = 0.75
-[powerline-scale-y-875]
-powerlineScaleY = 0.875
-[powerline-scale-y-1000]
-powerlineScaleY = 1
-[powerline-scale-y-1125]
-powerlineScaleY = 1.125
-[powerline-scale-y-1250]
-powerlineScaleY = 1.25
-[powerline-scale-y-1375]
-powerlineScaleY = 1.375
-[powerline-scale-y-1500]
-powerlineScaleY = 1.5
-[powerline-scale-x-750]
-powerlineScaleX = 0.75
-[powerline-scale-x-875]
-powerlineScaleX = 0.875
-[powerline-scale-x-1000]
-powerlineScaleX = 1
-[powerline-scale-x-1125]
-powerlineScaleX = 1.125
-[powerline-scale-x-1250]
-powerlineScaleX = 1.25
-[powerline-scale-x-1375]
-powerlineScaleX = 1.375
-[powerline-scale-x-1500]
-powerlineScaleX = 1.5
-[powerline-shift-y-n500]
-powerlineShiftY = -500
-[powerline-shift-y-n450]
-powerlineShiftY = -450
-[powerline-shift-y-n400]
-powerlineShiftY = -400
-[powerline-shift-y-n350]
-powerlineShiftY = -350
-[powerline-shift-y-n300]
-powerlineShiftY = -300
-[powerline-shift-y-n250]
-powerlineShiftY = -250
-[powerline-shift-y-n200]
-powerlineShiftY = -200
-[powerline-shift-y-n150]
-powerlineShiftY = -150
-[powerline-shift-y-n100]
-powerlineShiftY = -100
-[powerline-shift-y-n50]
-powerlineShiftY = -50
-[powerline-shift-y-0]
-powerlineShiftY = 0
-[powerline-shift-y-p50]
-powerlineShiftY = 50
-[powerline-shift-y-p100]
-powerlineShiftY = 100
-[powerline-shift-y-p150]
-powerlineShiftY = 150
-[powerline-shift-y-p200]
-powerlineShiftY = 200
-[powerline-shift-y-p250]
-powerlineShiftY = 250
-[powerline-shift-y-p300]
-powerlineShiftY = 300
-[powerline-shift-y-p350]
-powerlineShiftY = 350
-[powerline-shift-y-p400]
-powerlineShiftY = 400
-[powerline-shift-y-p450]
-powerlineShiftY = 450
-[powerline-shift-y-p500]
-powerlineShiftY = 500
-[powerline-shift-x-n500]
-powerlineShiftX = -500
-[powerline-shift-x-n450]
-powerlineShiftX = -450
-[powerline-shift-x-n400]
-powerlineShiftX = -400
-[powerline-shift-x-n350]
-powerlineShiftX = -350
-[powerline-shift-x-n300]
-powerlineShiftX = -300
-[powerline-shift-x-n250]
-powerlineShiftX = -250
-[powerline-shift-x-n200]
-powerlineShiftX = -200
-[powerline-shift-x-n150]
-powerlineShiftX = -150
-[powerline-shift-x-n100]
-powerlineShiftX = -100
-[powerline-shift-x-n50]
-powerlineShiftX = -50
-[powerline-shift-x-0]
-powerlineShiftX = 0
-[powerline-shift-x-p50]
-powerlineShiftX = 50
-[powerline-shift-x-p100]
-powerlineShiftX = 100
-[powerline-shift-x-p150]
-powerlineShiftX = 150
-[powerline-shift-x-p200]
-powerlineShiftX = 200
-[powerline-shift-x-p250]
-powerlineShiftX = 250
-[powerline-shift-x-p300]
-powerlineShiftX = 300
-[powerline-shift-x-p350]
-powerlineShiftX = 350
-[powerline-shift-x-p400]
-powerlineShiftX = 400
-[powerline-shift-x-p450]
-powerlineShiftX = 450
-[powerline-shift-x-p500]
-powerlineShiftX = 500
-
-# Compatibility PUA ligature sample
-# [[iosevka.compLig]]
-# unicode = 57600 # 0xE100
-# featureTag = 'XV00'
-# sequence = '<*>'
-
-# Exclude code points
-[exclude-check-and-cross-symbol.appends]
-excludedCharRanges = [[10003, 10008]]
+slopeAngle = 9.4

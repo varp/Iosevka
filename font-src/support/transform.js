@@ -14,6 +14,10 @@ module.exports = class Transform {
 		return new Transform(1, 0, 0, 1, 0, 0);
 	}
 
+	static Translate(x, y) {
+		return new Transform(1, 0, 0, 1, x, y);
+	}
+
 	apply(pt) {
 		return {
 			x: pt.x * this.xx + pt.y * this.yx + this.x,
@@ -45,5 +49,9 @@ module.exports = class Transform {
 			-(this.x * this.yy - this.y * this.yx) / denom,
 			-(-this.x * this.xy + this.y * this.xx) / denom
 		);
+	}
+
+	static isTranslate(tfm) {
+		return tfm.xx === 1 && tfm.yy === 1 && tfm.xy === 0 && tfm.yx === 0;
 	}
 };

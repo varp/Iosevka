@@ -16,6 +16,24 @@ const Dotless = {
 	}
 };
 
+function SimpleProp(key) {
+	return {
+		get(glyph) {
+			if (glyph && glyph.related) return glyph.related[key];
+			else return null;
+		},
+		set(glyph, toGid) {
+			if (typeof toGid !== "string") throw new Error("Must supply a GID instead of a glyph");
+			if (!glyph.related) glyph.related = {};
+			glyph.related[key] = toGid;
+		}
+	};
+}
+
+const ZReduced = SimpleProp("ZReduced");
+const DollarShrinkKernel = SimpleProp("DollarShrinkKernel");
+const DollarShorterBar = SimpleProp("DollarShorterBar");
+
 const CvDecompose = {
 	get(glyph) {
 		if (glyph && glyph.related) return glyph.related.CvDecompose;
@@ -67,17 +85,6 @@ const TieGlyph = {
 	}
 };
 
-const DoNotDeriveVariants = {
-	get(glyph) {
-		if (glyph && glyph.related) return !!glyph.related.DoNotDeriveVariants;
-		else return false;
-	},
-	set(glyph) {
-		if (!glyph.related) glyph.related = {};
-		glyph.related.DoNotDeriveVariants = true;
-	}
-};
-
 const Radical = {
 	get(glyph) {
 		if (glyph && glyph.related) return !!glyph.related.radical;
@@ -90,25 +97,39 @@ const Radical = {
 };
 
 const CvTagCache = new Map();
-function Cv(tag) {
-	if (CvTagCache.has(tag)) return CvTagCache.get(tag);
+function Cv(tag, rank) {
+	const key = tag + "#" + rank;
+	if (CvTagCache.has(key)) return CvTagCache.get(key);
 	const rel = {
 		tag,
+		rank,
 		get(glyph) {
-			if (glyph && glyph.related && glyph.related.cv) return glyph.related.cv[tag];
+			if (glyph && glyph.related && glyph.related.cv) return glyph.related.cv[key];
 			else return null;
 		},
 		set(glyph, toGid) {
 			if (typeof toGid !== "string") throw new Error("Must supply a GID instead of a glyph");
 			if (!glyph.related) glyph.related = {};
 			if (!glyph.related.cv) glyph.related.cv = {};
-			glyph.related.cv[tag] = toGid;
+			glyph.related.cv[key] = toGid;
+		},
+		getPreventDeriving(glyph) {
+			return (
+				glyph.related &&
+				glyph.related.preventCvDeriving &&
+				!!glyph.related.preventCvDeriving[key]
+			);
+		},
+		setPreventDeriving(glyph) {
+			if (!glyph.related) glyph.related = {};
+			if (!glyph.related.preventCvDeriving) glyph.related.preventCvDeriving = {};
+			glyph.related.preventCvDeriving[key] = true;
 		},
 		amendName(name) {
-			return name + "." + tag;
+			return name + "." + key;
 		}
 	};
-	CvTagCache.set(tag, rel);
+	CvTagCache.set(key, rel);
 	return rel;
 }
 
@@ -125,8 +146,10 @@ const AnyCv = {
 	query(glyph) {
 		let ret = [];
 		if (glyph && glyph.related && glyph.related.cv) {
-			for (const tag in glyph.related.cv) {
-				const rel = Cv(tag);
+			for (const key in glyph.related.cv) {
+				const [tag, rankStr] = key.split("#");
+				const rank = parseInt(rankStr, 10);
+				const rel = Cv(tag, rank);
 				if (rel.get(glyph)) ret.push(rel);
 			}
 		}
@@ -138,13 +161,26 @@ const AnyDerivingCv = {
 	optional: false,
 	query(glyph) {
 		let ret = [];
-		if (glyph && !DoNotDeriveVariants.get(glyph) && glyph.related && glyph.related.cv) {
-			for (const tag in glyph.related.cv) {
-				const rel = Cv(tag);
+		if (glyph && glyph.related && glyph.related.cv) {
+			for (const key in glyph.related.cv) {
+				if (glyph.related.preventCvDeriving && glyph.related.preventCvDeriving[key])
+					continue;
+				const [tag, rankStr] = key.split("#");
+				const rank = parseInt(rankStr, 10);
+				const rel = Cv(tag, rank);
 				if (rel.get(glyph)) ret.push(rel);
 			}
 		}
 		return ret;
+	},
+	hasNonDerivingVariants(glyph) {
+		if (glyph && glyph.related && glyph.related.cv) {
+			for (const key in glyph.related.cv) {
+				if (glyph.related.preventCvDeriving && glyph.related.preventCvDeriving[key])
+					return true;
+			}
+		}
+		return false;
 	}
 };
 
@@ -235,8 +271,8 @@ function getGrMesh(gidList, grq, fnGidToGlyph) {
 	return ret;
 }
 
-function createGrDisplaySheet(font, gid) {
-	const glyph = font.glyf[gid];
+function createGrDisplaySheet(glyphStore, gid) {
+	const glyph = glyphStore.queryByName(gid);
 	if (!glyph) return [];
 
 	// Query selected typographic features -- mostly NWID and WWID
@@ -247,16 +283,14 @@ function createGrDisplaySheet(font, gid) {
 	let charVariantFeatures = [];
 	const decomposition = CvDecompose.get(glyph);
 	if (decomposition) {
-		const variantFeatureSet = new Set();
+		const variantAssignmentSet = new Set();
 		for (const componentGn of decomposition) {
-			const component = font.glyf[componentGn];
+			const component = glyphStore.queryByName(componentGn);
 			if (!component) continue;
-			const cvRow = queryCvFeatureTagsOf(componentGn, component, variantFeatureSet);
-			if (cvRow.length) charVariantFeatures.push(cvRow);
+			queryCvFeatureTagsOf(charVariantFeatures, componentGn, component, variantAssignmentSet);
 		}
 	} else {
-		const cvRow = queryCvFeatureTagsOf(gid, glyph, null);
-		if (cvRow.length) charVariantFeatures.push(cvRow);
+		queryCvFeatureTagsOf(charVariantFeatures, gid, glyph, null);
 	}
 
 	return [typographicFeatures, charVariantFeatures];
@@ -267,7 +301,7 @@ function queryPairFeatureTags(gid, f1, f2, sink) {
 		const re1 = new RegExp(`\\.${f1}$`),
 			re2 = new RegExp(`\\.${f2}$`);
 		if (re1.test(gid) || re2.test(gid)) {
-			sink.push(f1, f2);
+			sink.push(`'${f1}' 1`, `'${f2}' 1`);
 		}
 	}
 }
@@ -278,26 +312,36 @@ function byTagPreference(a, b) {
 	if (ua > ub) return 1;
 	return 0;
 }
-function queryCvFeatureTagsOf(gid, glyph, vfs) {
+function queryCvFeatureTagsOf(sink, gid, glyph, variantAssignmentSet) {
 	const cvs = AnyCv.query(glyph).sort(byTagPreference);
-	let results = [];
 	let existingGlyphs = new Set();
+	let m = new Map();
 	for (const gr of cvs) {
 		const tag = gr.tag;
 		const target = gr.get(glyph);
 		if (target === gid) continue;
 		if (existingGlyphs.has(target)) continue;
 		existingGlyphs.add(target);
-		if (!vfs) results.push(tag);
-		else if (!vfs.has(tag)) {
-			results.push(tag);
-			vfs.add(tag);
+
+		let g = m.get(tag);
+		if (!g) {
+			g = [];
+			m.set(tag, g);
+		}
+
+		const assignCss = `'${tag}' ${gr.rank}`;
+		if (!variantAssignmentSet) {
+			g.push(assignCss);
+		} else if (!variantAssignmentSet.has(assignCss)) {
+			g.push(assignCss);
+			variantAssignmentSet.add(assignCss);
 		}
 	}
-	return results;
+	for (const g of m.values()) if (g.length) sink.push(g);
 }
 
 exports.Dotless = Dotless;
+exports.ZReduced = ZReduced;
 exports.Cv = Cv;
 exports.AnyCv = AnyCv;
 exports.DotlessOrNot = DotlessOrNot;
@@ -305,9 +349,11 @@ exports.getGrTree = getGrTree;
 exports.getGrMesh = getGrMesh;
 exports.TieMark = TieMark;
 exports.TieGlyph = TieGlyph;
-exports.DoNotDeriveVariants = DoNotDeriveVariants;
 exports.Radical = Radical;
 exports.AnyDerivingCv = AnyDerivingCv;
 exports.CcmpDecompose = CcmpDecompose;
 exports.CvDecompose = CvDecompose;
 exports.createGrDisplaySheet = createGrDisplaySheet;
+exports.DollarShrinkKernel = DollarShrinkKernel;
+exports.DollarShorterBar = DollarShorterBar;
+exports.SvInheritableRelations = [DollarShrinkKernel, DollarShorterBar];

@@ -1,24 +1,25 @@
 "use strict";
 
-const EmptyFont = require("./empty-font.js");
-const buildGlyphs = require("./build-glyphs.js");
+const EmptyFont = require("./empty-font");
+const buildGlyphs = require("../glyphs/index");
 const finalizeFont = require("./finalize/index");
+const convertOtd = require("./otd-conv/index");
 
 const { buildOtl } = require("../otl/index");
 const { assignFontNames } = require("../meta/naming");
-const { setFontMetrics } = require("../meta/aesthetics");
+const { copyFontMetrics } = require("../meta/aesthetics");
 
 module.exports = function (para) {
-	const font = EmptyFont();
+	const otd = EmptyFont();
 	const gs = buildGlyphs(para);
 
-	assignFontNames(para, gs.metrics, font);
-	setFontMetrics(para, gs.metrics, font);
+	assignFontNames(para, otd);
+	copyFontMetrics(gs.fontMetrics, otd);
 
-	const otl = buildOtl(para, gs.glyphs, gs.glyphList, gs.unicodeGlyphs);
-	font.GSUB = otl.GSUB;
-	font.GPOS = otl.GPOS;
-	font.GDEF = otl.GDEF;
+	const otl = buildOtl(para, gs.glyphStore);
+	otd.GSUB = otl.GSUB;
+	otd.GPOS = otl.GPOS;
+	otd.GDEF = otl.GDEF;
 
 	// Regulate
 	const excludeChars = new Set();
@@ -28,6 +29,7 @@ module.exports = function (para) {
 		}
 	}
 
-	finalizeFont(para, [...gs.glyphList], excludeChars, font);
-	return font;
+	const finalGs = finalizeFont(para, gs.glyphStore, excludeChars, otd);
+	const font = convertOtd(otd, finalGs);
+	return { font, glyphStore: finalGs };
 };

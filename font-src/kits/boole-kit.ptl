@@ -1,0 +1,22 @@
+import 'typo-geom' as TypoGeom
+import '../support/curve-util' as CurveUtil
+import '../support/geometry' as [object BooleanGeometry]
+
+export : define [SetupBuilders args] : begin
+	define [object Glyph GlobalTransform] args
+	define [impl operator operands] : begin
+		return : function [] : begin
+			local operandGeometries {}
+			foreach operand [items-of operands] : begin
+				local g1 : new Glyph
+				set g1.gizmo : this.gizmo || GlobalTransform
+				g1.include operand
+				operandGeometries.push g1.geometry
+
+			this.includeGeometry : new BooleanGeometry operator operandGeometries
+
+	define [union] : impl TypoGeom.Boolean.ClipType.ctUnion [{}.slice.call arguments 0]
+	define [intersection] : impl TypoGeom.Boolean.ClipType.ctIntersection [{}.slice.call arguments 0]
+	define [difference] : impl TypoGeom.Boolean.ClipType.ctDifference [{}.slice.call arguments 0]
+
+	return [object union intersection difference]
