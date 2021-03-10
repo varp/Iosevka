@@ -1,148 +1,580 @@
-###############################  VardanPro  ####################################
 
-[buildPlans.iosevka-vardanpro]               # <iosevka-vardanpro> is your plan name
-family = "Iosevka VardanPro"                 # Font menu family name
-design = ["sans", "ligset-php", "v-asterisk-low", "v-ampersand-upper-open", "v-dollar-open", "cv67"]
-hintParams = ["-a", "sss"]              # Optional custom parameters for ttfautohint
+########################  Iosevka VardanPro #####################################
+[buildPlans.iosevka-vardanpro]
+family = "Iosevka VardanPro"
+spacing = "normal"
+serifs = "sans"
 
-
-[buildPlans.iosevka-vardanpro.widths.normal]
-shape = 500        # Unit Width, measured in 1/1000 em.
-menu  = 5          # Width grade for the font's names.
-css   = "normal"   # "font-stretch' property of webfont CSS.
-
-
-########################  VardanPro Monaco #####################################
-
-[buildPlans.iosevka-vardanpro-monaco]               # <iosevka-vardanpro> is your plan name
-family = "Iosevka VardanPro Monaco Style"                 # Font menu family name
-design = ["ss07","ligset-php", "v-asterisk-low", "v-ampersand-upper-open", "v-dollar-open", "cv67"]
-hintParams = ["-a", "sss"]              # Optional custom parameters for ttfautohint
-
-[buildPlans.iosevka-vardanpro-monaco.widths.normal]
-shape = 500        # Unit Width, measured in 1/1000 em.
-menu  = 5          # Width grade for the font's names.
-css   = "normal"   # "font-stretch' property of webfont CSS.
-
-
-########################  VardanPro Lucida #####################################
-
-[buildPlans.iosevka-vardanpro-lucida]               # <iosevka-vardanpro> is your plan name
-family = "Iosevka VardanPro Lucida Style"                 # Font menu family name
-design = ["ss13","ligset-php", "v-asterisk-low", "v-ampersand-upper-open", "v-dollar-open", "cv67"]
-hintParams = ["-a", "sss"]              # Optional custom parameters for ttfautohint
-
-[buildPlans.iosevka-vardanpro-lucida.widths.normal]
-shape = 500        # Unit Width, measured in 1/1000 em.
-menu  = 5          # Width grade for the font's names.
-css   = "normal"   # "font-stretch' property of webfont CSS.
+no-cv-ss = false
 
 
 
-########################  VardanPro Ubuntu #####################################
 
-[buildPlans.iosevka-vardanpro-ubuntu]               # <iosevka-vardanpro> is your plan name
-family = "Iosevka VardanPro Ubuntu Style"                 # Font menu family name
-design = ["ss12","ligset-php", "v-asterisk-low", "v-ampersand-upper-open", "v-dollar-open", "cv67"]
-hintParams = ["-a", "sss"]              # Optional custom parameters for ttfautohint
 
-[buildPlans.iosevka-vardanpro-ubuntu.widths.normal]
-shape = 500        # Unit Width, measured in 1/1000 em.
-menu  = 5          # Width grade for the font's names.
-css   = "normal"   # "font-stretch' property of webfont CSS.
+[buildPlans.iosevka-vardanpro.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+lig-ltgteq = "slanted"
 
 
 
-############################# VardanPro Light ##################################
-
-[buildPlans.iosevka-vardanpro-light]               # <iosevka-vardanpro> is your plan name
-family = "Iosevka VardanPro Light"                 # Font menu family name
-design = ["sans", "ligset-php", "v-asterisk-low", "v-ampersand-upper-open", "v-dollar-open", "cv67"]
-hintParams = ["-a", "sss"]              # Optional custom parameters for ttfautohint
+[buildPlans.iosevka-vardanpro.ligations]
+inherits = "php"
 
 
-[buildPlans.iosevka-vardanpro-light.widths.normal]
-shape = 500        # Unit Width, measured in 1/1000 em.
-menu  = 5          # Width grade for the font's names.
-css   = "normal"   # "font-stretch' property of webfont CSS.
 
-[buildPlans.iosevka-vardanpro-light.weights.light]
+
+[buildPlans.iosevka-vardanpro.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
+
+
+
+########################  Iosevka VardanPro Light #####################################
+[buildPlans.iosevka-vardanpro-light]
+family = "Iosevka VardanPro Light"
+spacing = "normal"
+serifs = "sans"
+
+no-cv-ss = false
+
+
+
+
+
+[buildPlans.iosevka-vardanpro-light.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+lig-ltgteq = "slanted"
+
+
+
+[buildPlans.iosevka-vardanpro-light.ligations]
+inherits = "php"
+
+
+
+[buildPlans.iosevka-vardanpro-light.weights.normal]
 shape = 300
-menu  = 300
-css   = 300
+menu = 300
+css = 300
+
+
 
 [buildPlans.iosevka-vardanpro-light.slopes]
-upright = "normal"
-italic = "italic"
-oblique = "oblique"
-
-############################# VardanPro Monaco Light ###########################
-
-[buildPlans.iosevka-vardanpro-monaco-light]               # <iosevka-vardanpro> is your plan name
-family = "Iosevka VardanPro Monaco Light"                 # Font menu family name
-design = ["ss07","ligset-php", "v-asterisk-low", "v-ampersand-upper-open", "v-dollar-open", "cv67"]
-hintParams = ["-a", "sss"]              # Optional custom parameters for ttfautohint
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
 
 
-[buildPlans.iosevka-vardanpro-monaco-light.widths.normal]
-shape = 500        # Unit Width, measured in 1/1000 em.
-menu  = 5          # Width grade for the font's names.
-css   = "normal"   # "font-stretch' property of webfont CSS.
 
-[buildPlans.iosevka-vardanpro-monaco-light.weights.light]
+########################  Iosevka VardanPro Monaco Style #####################################
+[buildPlans.iosevka-vardanpro-monaco-style]
+family = "Iosevka VardanPro Monaco Style"
+spacing = "normal"
+serifs = "sans"
+
+no-cv-ss = false
+
+
+
+
+[buildPlans.iosevka-vardanpro-monaco-style.variants]
+inherits = "ss07"
+
+
+[buildPlans.iosevka-vardanpro-monaco-style.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+lig-ltgteq = "slanted"
+
+
+
+[buildPlans.iosevka-vardanpro-monaco-style.ligations]
+inherits = "php"
+
+
+
+
+[buildPlans.iosevka-vardanpro-monaco-style.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
+
+
+
+########################  Iosevka VardanPro Monaco Style Light #####################################
+[buildPlans.iosevka-vardanpro-monaco-style-light]
+family = "Iosevka VardanPro Monaco Style Light"
+spacing = "normal"
+serifs = "sans"
+
+no-cv-ss = false
+
+
+
+
+[buildPlans.iosevka-vardanpro-monaco-style-light.variants]
+inherits = "ss07"
+
+
+[buildPlans.iosevka-vardanpro-monaco-style-light.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+lig-ltgteq = "slanted"
+
+
+
+[buildPlans.iosevka-vardanpro-monaco-style-light.ligations]
+inherits = "php"
+
+
+
+[buildPlans.iosevka-vardanpro-monaco-style-light.weights.normal]
 shape = 300
-menu  = 300
-css   = 300
-
-[buildPlans.iosevka-vardanpro-monaco-light.slopes]
-upright = "normal"
-italic = "italic"
-oblique = "oblique"
+menu = 300
+css = 300
 
 
-############################# VardanPro Lucida Light ###########################
 
-[buildPlans.iosevka-vardanpro-lucida-light]               # <iosevka-vardanpro> is your plan name
-family = "Iosevka VardanPro Lucida Light"                 # Font menu family name
-design = ["ss13","ligset-php", "v-asterisk-low", "v-ampersand-upper-open", "v-dollar-open", "cv67"]
-hintParams = ["-a", "sss"]              # Optional custom parameters for ttfautohint
+[buildPlans.iosevka-vardanpro-monaco-style-light.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
 
 
-[buildPlans.iosevka-vardanpro-lucida-light.widths.normal]
-shape = 500        # Unit Width, measured in 1/1000 em.
-menu  = 5          # Width grade for the font's names.
-css   = "normal"   # "font-stretch' property of webfont CSS.
 
-[buildPlans.iosevka-vardanpro-lucida-light.weights.light]
+########################  Iosevka VardanPro Lucida Style #####################################
+[buildPlans.iosevka-vardanpro-lucida-style]
+family = "Iosevka VardanPro Lucida Style"
+spacing = "normal"
+serifs = "sans"
+
+no-cv-ss = false
+
+
+
+
+[buildPlans.iosevka-vardanpro-lucida-style.variants]
+inherits = "ss13"
+
+
+[buildPlans.iosevka-vardanpro-lucida-style.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+lig-ltgteq = "slanted"
+
+
+
+[buildPlans.iosevka-vardanpro-lucida-style.ligations]
+inherits = "php"
+
+
+
+
+[buildPlans.iosevka-vardanpro-lucida-style.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
+
+
+
+########################  Iosevka VardanPro Lucida Style Light #####################################
+[buildPlans.iosevka-vardanpro-lucida-style-light]
+family = "Iosevka VardanPro Lucida Style Light"
+spacing = "normal"
+serifs = "sans"
+
+no-cv-ss = false
+
+
+
+
+[buildPlans.iosevka-vardanpro-lucida-style-light.variants]
+inherits = "ss13"
+
+
+[buildPlans.iosevka-vardanpro-lucida-style-light.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+lig-ltgteq = "slanted"
+
+
+
+[buildPlans.iosevka-vardanpro-lucida-style-light.ligations]
+inherits = "php"
+
+
+
+[buildPlans.iosevka-vardanpro-lucida-style-light.weights.normal]
 shape = 300
-menu  = 300
-css   = 300
-
-[buildPlans.iosevka-vardanpro-lucida-light.slopes]
-upright = "normal"
-italic = "italic"
-oblique = "oblique"
+menu = 300
+css = 300
 
 
-############################# VardanPro Ubuntu Light ###########################
 
-[buildPlans.iosevka-vardanpro-ubuntu-light]               # <iosevka-vardanpro> is your plan name
-family = "Iosevka VardanPro Ubuntu Light"                 # Font menu family name
-design = ["ss12","ligset-php", "v-asterisk-low", "v-ampersand-upper-open", "v-dollar-open", "cv67"]
-hintParams = ["-a", "sss"]              # Optional custom parameters for ttfautohint
+[buildPlans.iosevka-vardanpro-lucida-style-light.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
 
 
-[buildPlans.iosevka-vardanpro-ubuntu-light.widths.normal]
-shape = 500        # Unit Width, measured in 1/1000 em.
-menu  = 5          # Width grade for the font's names.
-css   = "normal"   # "font-stretch' property of webfont CSS.
 
-[buildPlans.iosevka-vardanpro-ubuntu-light.weights.light]
+########################  Iosevka VardanPro Ubuntu Style #####################################
+[buildPlans.iosevka-vardanpro-ubuntu-style]
+family = "Iosevka VardanPro Ubuntu Style"
+spacing = "normal"
+serifs = "sans"
+
+no-cv-ss = false
+
+
+
+
+[buildPlans.iosevka-vardanpro-ubuntu-style.variants]
+inherits = "ss12"
+
+
+[buildPlans.iosevka-vardanpro-ubuntu-style.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+lig-ltgteq = "slanted"
+
+
+
+[buildPlans.iosevka-vardanpro-ubuntu-style.ligations]
+inherits = "php"
+
+
+
+
+[buildPlans.iosevka-vardanpro-ubuntu-style.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
+
+
+
+########################  Iosevka VardanPro Ubuntu Style Light #####################################
+[buildPlans.iosevka-vardanpro-ubuntu-style-light]
+family = "Iosevka VardanPro Ubuntu Style Light"
+spacing = "normal"
+serifs = "sans"
+
+no-cv-ss = false
+
+
+
+
+[buildPlans.iosevka-vardanpro-ubuntu-style-light.variants]
+inherits = "ss12"
+
+
+[buildPlans.iosevka-vardanpro-ubuntu-style-light.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+lig-ltgteq = "slanted"
+
+
+
+[buildPlans.iosevka-vardanpro-ubuntu-style-light.ligations]
+inherits = "php"
+
+
+
+[buildPlans.iosevka-vardanpro-ubuntu-style-light.weights.normal]
 shape = 300
-menu  = 300
-css   = 300
+menu = 300
+css = 300
 
-[buildPlans.iosevka-vardanpro-ubuntu-light.slopes]
-upright = "normal"
-italic = "italic"
-oblique = "oblique"
+
+
+[buildPlans.iosevka-vardanpro-ubuntu-style-light.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
+
+
+
+########################  Iosevka VardanPro Term #####################################
+[buildPlans.iosevka-vardanpro-term]
+family = "Iosevka VardanPro Term"
+spacing = "fontconfig-mono"
+serifs = "sans"
+
+
+
+
+
+[buildPlans.iosevka-vardanpro-term.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+
+
+
+
+
+
+[buildPlans.iosevka-vardanpro-term.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
+
+
+
+########################  Iosevka VardanPro Term Light #####################################
+[buildPlans.iosevka-vardanpro-term-light]
+family = "Iosevka VardanPro Term Light"
+spacing = "fontconfig-mono"
+serifs = "sans"
+
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-light.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-light.weights.normal]
+shape = 300
+menu = 300
+css = 300
+
+
+
+[buildPlans.iosevka-vardanpro-term-light.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
+
+
+
+########################  Iosevka VardanPro Term Monaco Style #####################################
+[buildPlans.iosevka-vardanpro-term-monaco-style]
+family = "Iosevka VardanPro Term Monaco Style"
+spacing = "fontconfig-mono"
+serifs = "sans"
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-monaco-style.variants]
+inherits = "ss07"
+
+
+[buildPlans.iosevka-vardanpro-term-monaco-style.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+
+
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-monaco-style.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
+
+
+
+########################  Iosevka VardanPro Term Monaco Style Light #####################################
+[buildPlans.iosevka-vardanpro-term-monaco-style-light]
+family = "Iosevka VardanPro Term Monaco Style Light"
+spacing = "fontconfig-mono"
+serifs = "sans"
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-monaco-style-light.variants]
+inherits = "ss07"
+
+
+[buildPlans.iosevka-vardanpro-term-monaco-style-light.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-monaco-style-light.weights.normal]
+shape = 300
+menu = 300
+css = 300
+
+
+
+[buildPlans.iosevka-vardanpro-term-monaco-style-light.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
+
+
+
+########################  Iosevka VardanPro Term Lucida Style #####################################
+[buildPlans.iosevka-vardanpro-term-lucida-style]
+family = "Iosevka VardanPro Term Lucida Style"
+spacing = "fontconfig-mono"
+serifs = "sans"
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-lucida-style.variants]
+inherits = "ss13"
+
+
+[buildPlans.iosevka-vardanpro-term-lucida-style.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+
+
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-lucida-style.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
+
+
+
+########################  Iosevka VardanPro Term Lucida Style Light #####################################
+[buildPlans.iosevka-vardanpro-term-lucida-style-light]
+family = "Iosevka VardanPro Term Lucida Style Light"
+spacing = "fontconfig-mono"
+serifs = "sans"
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-lucida-style-light.variants]
+inherits = "ss13"
+
+
+[buildPlans.iosevka-vardanpro-term-lucida-style-light.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-lucida-style-light.weights.normal]
+shape = 300
+menu = 300
+css = 300
+
+
+
+[buildPlans.iosevka-vardanpro-term-lucida-style-light.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
+
+
+
+########################  Iosevka VardanPro Term Ubuntu Style #####################################
+[buildPlans.iosevka-vardanpro-term-ubuntu-style]
+family = "Iosevka VardanPro Term Ubuntu Style"
+spacing = "fontconfig-mono"
+serifs = "sans"
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-ubuntu-style.variants]
+inherits = "ss12"
+
+
+[buildPlans.iosevka-vardanpro-term-ubuntu-style.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+
+
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-ubuntu-style.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
+
+
+
+########################  Iosevka VardanPro Term Ubuntu Style Light #####################################
+[buildPlans.iosevka-vardanpro-term-ubuntu-style-light]
+family = "Iosevka VardanPro Term Ubuntu Style Light"
+spacing = "fontconfig-mono"
+serifs = "sans"
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-ubuntu-style-light.variants]
+inherits = "ss12"
+
+
+[buildPlans.iosevka-vardanpro-term-ubuntu-style-light.variants.design]
+
+asterisk = "low"
+ampersand = "upper-open"
+dollar = "open"
+
+
+
+
+
+[buildPlans.iosevka-vardanpro-term-ubuntu-style-light.weights.normal]
+shape = 300
+menu = 300
+css = 300
+
+
+
+[buildPlans.iosevka-vardanpro-term-ubuntu-style-light.slopes]
+ upright = "normal"
+ italic = "italic"
+ oblique = "oblique"
+
+
