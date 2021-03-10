@@ -23,7 +23,11 @@ jobs:
     - name: generate private config
       run: node generate-private-plans.js 2>plans-to-build.txt
     - name: Building fonts
-      run: for p in $(cat plans-to-build.txt | tr $'\n' ' '); do npm run build -- ttf::$p; done
+      run: |
+        for p in $(cat plans-to-build.txt | tr $'\n' ' '); do
+          npm run build -- ttf::$p 
+        done
+      shell: bash
     - name: uploading artifacts
       uses: actions/upload-artifact@v2
       with:
