@@ -56,3 +56,6 @@ params/private-parameters.toml
 
 # Ignore tmp directory
 tmp
+
+plans-to-build.txt
+
