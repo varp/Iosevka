@@ -15,22 +15,16 @@ const variants = {
 	ss12: 'Ubuntu Style'
 };
 
-const design = `
-asterisk = "low"
+const design = `asterisk = "low"
 ampersand = "upper-open"
 dollar = "open"
-lig-ltgteq = "slanted"
-`;
+lig-ltgteq = "slanted"`;
 
-const designTerm = `
-asterisk = "low"
+const designTerm = `asterisk = "low"
 ampersand = "upper-open"
-dollar = "open"
-`;
+dollar = "open"`;
 
-const ligations = `
-inherits = "php"
-`;
+const ligations = `inherits = "php"`;
 
 const weights = {
 	normal: {
@@ -54,29 +48,24 @@ const template = `
 family = "<%- fontDisplayName %>"
 spacing = "<%- fontSpacing %>"
 serifs = "sans"
-<% if (fontSpacing !== 'fontconfig-mono') { %>
+<%_ if (fontSpacing === 'fontconfig-mono') { _%>
 no-cv-ss = false
-<% } %>
-
-
-<% if (fontVariant !== 'default') { %>
+<%_ } _%>
+<%_ if (fontVariant !== 'default') { _%>
 [buildPlans.<%- fontKeyBuildId %>.variants]
 inherits = "<%- fontVariant %>"
-<% } %>
-
+<%_ } _%>
 [buildPlans.<%- fontKeyBuildId %>.variants.design]
 <%- design %>
-
-<% if (fontSpacing !== 'fontconfig-mono') { %>
+<%_ if (fontSpacing !== 'fontconfig-mono') { _%>
 [buildPlans.<%- fontKeyBuildId %>.ligations]
 inherits = "php"
-<% } %>
-
-<% if (fontKeyBuildId.includes('light')) { %>
+<%_ } _%>
+<%_ if (fontKeyBuildId.includes('light')) { _%>
 <%- fontWeightsProperties %>
-<% } %>
-
+<%_ } _%>
 <%- fontSlopesProperties %>
+
 `;
 
 
@@ -84,7 +73,7 @@ inherits = "php"
 function buildWeights(fontKeyBuildId, weights) {
 	let fontWeightsProperties = '';
 	for (const fontWeight in weights) {
-		fontWeightsProperties += `[buildPlans.${fontKeyBuildId}.weights.${fontWeight}]\n${Object.entries(weights[fontWeight]).reduce((p,v,i) => p + `${v[0]} = ${v[1]}\n`, '')}`;
+		fontWeightsProperties += `[buildPlans.${fontKeyBuildId}.weights.${fontWeight}]\n${Object.entries(weights[fontWeight]).map((v) => v.join('=')).join('\n')}`;
 	}
 
 	return fontWeightsProperties;
@@ -94,7 +83,7 @@ function buildWeights(fontKeyBuildId, weights) {
 function buildSlopes(fontKeyBuildId, slopes) {
 	let fontSlopesProperties = `[buildPlans.${fontKeyBuildId}.slopes]\n`;
 	for (const fontSlope in slopes) {
-		fontSlopesProperties += ` ${fontSlope} = "${slopes[fontSlope]}"\n`;
+		fontSlopesProperties += `${fontSlope} = "${slopes[fontSlope]}"\n`;
 	}
 
 	return fontSlopesProperties;
@@ -117,16 +106,26 @@ function buildTemplateData(fontDisplayName, fontSpacing, fontVariant, weights, s
 	};
 }
 
+
+function render(data) {
+	let rendered = ejs.render(template, data, {
+		rmWhitespace: true
+	}).replaceAll(/^$/g, '');
+
+	console.log(rendered);
+	console.error(data.fontKeyBuildId);
+}
+
 for (const fontSpacing in spacings) {
 	for (const fontVariant in variants) {
 		let fontDisplayName = `${family} ${spacings[fontSpacing]} ${variants[fontVariant]}`.trim();
 		let data = buildTemplateData(fontDisplayName, fontSpacing, fontVariant, weights, slopes);
-		console.log(ejs.render(template, data));
+		render(data);
 
 		if (BUILD_LITE) {
 			let fontDisplayName = `${family} ${spacings[fontSpacing]} ${variants[fontVariant]} Light`.trim();
 			let data = buildTemplateData(fontDisplayName, fontSpacing, fontVariant, weights, slopes);
-			console.log(ejs.render(template, data));
+			render(data);
 		}
 	}
 
