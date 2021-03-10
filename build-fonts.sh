@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
+set -exo pipefail
 
 for p in $(cat plans-to-build.txt | tr $'\n' ' '); do
 	echo "start building $p"
