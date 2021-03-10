@@ -3,34 +3,29 @@
 
 name: Build fonts
 
-on:
-  workflow_dispatch
+on: workflow_dispatch
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '15'
-    - name: ttfautohint
-      run: sudo apt-get install -y ttfautohint
-    - run: npm install
-    - name: generate private config
-      run: node generate-private-plans.js 2>plans-to-build.txt
-    - name: Building fonts
-      run: |
-        for p in $(cat plans-to-build.txt | tr $'\n' ' '); do
-          npm run build -- ttf::$p 
-        done
-      shell: bash
-    - name: uploading artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: dist-fonts
-        path: |
-          dist
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "15"
+      - name: ttfautohint
+        run: sudo apt-get install -y ttfautohint
+      - run: npm install
+      - name: generate private config
+        run: node generate-private-plans.js 2>plans-to-build.txt
+      - name: Building fonts
+        run: ./build-fonts.sh
+        shell: bash
+      - name: uploading artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist-fonts
+          path: |
+            dist
