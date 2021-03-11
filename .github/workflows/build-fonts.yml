@@ -28,3 +28,4 @@ jobs:
           name: dist-fonts
           path: |
             dist
+            .build/.verda-build-journal
