@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       task:
-        description: "Task to run (leave empty to run all)"
+        description: "Task to run (see build-fonts.sh)"
         required: false
         default: ""
 
