@@ -9,7 +9,7 @@ on:
       task:
         description: "Task to run (leave empty to run all)"
         required: false
-        default: "Mona the Octocat"
+        default: ""
 
 jobs:
   build:
