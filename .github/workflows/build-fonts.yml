@@ -26,9 +26,9 @@ jobs:
       - run: npm install
       - name: generate private config
         run: node generate-private-plans.js 2>plans-to-build.txt | tee private-build-plans.toml
-      - run: |
-          echo "patching session file in verda"
-          patch -p0 < session.patch
+      - name: patching libs
+        run: |
+          patch -p0 --binary < session.patch
       - name: Building fonts
         run: ./build-fonts.sh ${{ github.event.inputs.task }}
       - name: upload build logs
