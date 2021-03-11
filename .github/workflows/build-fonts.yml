@@ -21,7 +21,7 @@ jobs:
       - name: generate private config
         run: node generate-private-plans.js 2>plans-to-build.txt
       - name: Building fonts
-        run: npm run build -- ttf::iosevka-vardanpro
+        run: node ./node_modules/.bin/verda -f verdafile.js ttf::iosevka-vardanpro
       - name: uploading artifacts
         uses: actions/upload-artifact@v2
         with:
