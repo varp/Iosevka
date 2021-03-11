@@ -19,7 +19,7 @@ jobs:
         run: sudo apt-get install -y ttfautohint
       - run: npm install
       - name: generate private config
-        run: node generate-private-plans.js 2>plans-to-build.txt | tee vardanpro-private-build-plans.toml
+        run: node generate-private-plans.js 2>plans-to-build.txt | tee private-build-plans.toml
       - name: Building fonts
         run: node ./node_modules/.bin/verda -f verdafile.js "ttf::iosevka-vardanpro"
       - name: upload build logs
