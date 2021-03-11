@@ -1,5 +1,5 @@
---- node_modules/verda/lib/session/index.js	2021-03-11 15:39:04.000000000 +0300
-+++ node_modules/verda/lib/session/index2.js	2021-03-11 15:24:39.000000000 +0300
+--- node_modules/verda/lib/session/index.js	1985-10-26 11:15:00.000000000 +0300
++++ node_modules/verda/lib/session/index2.js	2021-03-11 17:30:14.000000000 +0300
 @@ -39,11 +39,11 @@
      bindConfig(options) {
          this.config.bind(options);
