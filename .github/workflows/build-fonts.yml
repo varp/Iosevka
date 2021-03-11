@@ -3,7 +3,13 @@
 
 name: Build fonts
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "Task to run (leave empty to run all)"
+        required: false
+        default: "Mona the Octocat"
 
 jobs:
   build:
@@ -20,8 +26,11 @@ jobs:
       - run: npm install
       - name: generate private config
         run: node generate-private-plans.js 2>plans-to-build.txt | tee private-build-plans.toml
+      - run: |
+          echo "patching session file in verda"
+          patch -p0 < session.patch
       - name: Building fonts
-        run: node ./node_modules/.bin/verda -f verdafile.js "ttf::iosevka-vardanpro"
+        run: ./build-fonts.sh ${{ github.event.inputs.task }}
       - name: upload build logs
         uses: actions/upload-artifact@v2
         if: failure()
