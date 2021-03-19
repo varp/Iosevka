@@ -4,9 +4,10 @@ set -eo pipefail
 
 
 function buildPlans() {
+	echo "plans to build: $1"
 	for p in $1; do
 		echo "start building $type::$p"
-		# npm run build -- $type::$p
+		npm run build -- $type::$p
 	done
 }
 
