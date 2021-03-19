@@ -5,7 +5,7 @@ const ejs = require('ejs');
 const family = 'Iosevka VardanPro';
 const spacings = {
 	'normal': '',
-	'fontconfig-mono': 'Term',
+	'fixed': 'Term',
 };
 
 const variants = {
