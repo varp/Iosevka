@@ -48,7 +48,8 @@ const template = `
 family = "<%- fontDisplayName %>"
 spacing = "<%- fontSpacing %>"
 serifs = "sans"
-<%_ if (fontSpacing === 'fontconfig-mono') { _%>
+hintParams = ["-a", "sss"]
+<%_ if (fontSpacing === 'fixed') { _%>
 no-cv-ss = false
 <%_ } _%>
 <%_ if (fontVariant !== 'default') { _%>
@@ -57,15 +58,18 @@ inherits = "<%- fontVariant %>"
 <%_ } _%>
 [buildPlans.<%- fontKeyBuildId %>.variants.design]
 <%- design %>
-<%_ if (fontSpacing !== 'fontconfig-mono') { _%>
+<%_ if (fontSpacing !== 'fixed') { _%>
 [buildPlans.<%- fontKeyBuildId %>.ligations]
 inherits = "php"
 <%_ } _%>
+[buildPlans.<%- fontKeyBuildId %>.widths.normal]
+shape = 500
+menu  = 5
+css   = "normal"
 <%_ if (fontKeyBuildId.includes('light')) { _%>
 <%- fontWeightsProperties %>
 <%_ } _%>
 <%- fontSlopesProperties %>
-
 `;
 
 
@@ -115,6 +119,11 @@ function render(data) {
 	console.log(rendered);
 	console.error(data.fontKeyBuildId);
 }
+console.log(
+`[buildOptions]
+optimizeWithTtx = false`
+);
+
 
 for (const fontSpacing in spacings) {
 	for (const fontVariant in variants) {

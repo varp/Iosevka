@@ -13,8 +13,8 @@ on:
 
 jobs:
   build:
+    name: "build => ${{ github.event.inputs.task }}"
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -30,7 +30,10 @@ jobs:
         run: |
           patch -p0 --binary < session.patch
       - name: Building fonts
-        run: ./build-fonts.sh ${{ github.event.inputs.task }}
+        run: |
+          export DIST_FONT_NAME="$(echo "${{ github.event.inputs.task }}" | sed -Ee 's/:+/-/g' -e 's/[^[:alnum:]\-]+//g')"
+          echo "::set-env name=DIST_FONT_NAME::$DIST_FONT_NAME"
+          ./build-fonts.sh ${{ github.event.inputs.task }}
       - name: upload build logs
         uses: actions/upload-artifact@v2
         if: failure()
@@ -40,6 +43,6 @@ jobs:
       - name: upload fonts
         uses: actions/upload-artifact@v2
         with:
-          name: dist-fonts
+          name: dist-fonts-${{ env.DIST_FONT_NAME }}
           path: |
             dist/
