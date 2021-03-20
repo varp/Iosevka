@@ -79,7 +79,7 @@ jobs:
           patch -p0 --binary < session.patch
       - name: set envs
         run: |
-          export DIST_FONT_NAME="vardanpro"
+          export DIST_FONT_NAME="vardanpro-term"
           echo "DIST_FONT_NAME=$DIST_FONT_NAME" >> $GITHUB_ENV
           echo $DIST_FONT_NAME $VERSION
       - name: Building fonts
@@ -121,7 +121,7 @@ jobs:
           patch -p0 --binary < session.patch
       - name: set envs
         run: |
-          export DIST_FONT_NAME="vardanpro"
+          export DIST_FONT_NAME="vardanpro-light"
           echo "DIST_FONT_NAME=$DIST_FONT_NAME" >> $GITHUB_ENV
           echo $DIST_FONT_NAME $VERSION
       - name: Building fonts
