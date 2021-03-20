@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-           fetch-depth: 0
+          fetch-depth: 0
       - run: |
           echo "$(git tag --sort='-authordate' | head -n1)"
           export FONT_VERSION="$(git tag --sort='-authordate' | head -n1)"-${{ github.run_number }}
@@ -51,7 +51,7 @@ jobs:
       - name: upload fonts
         uses: actions/upload-artifact@v2
         with:
-          name: dist-fonts-${{ env.DIST_FONT_NAME }}-${{ env.VERSION }}
+          name: dist-fonts-${{ env.DIST_FONT_NAME }}-${{ env.FONT_VERSION }}
           path: |
             dist/
   build-term:
@@ -59,9 +59,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - run: |
-          export VERSION="$(git tag --sort='-authordate' | head -n1)"-${{ github.run_number }}
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "$(git tag --sort='-authordate' | head -n1)"
+          export FONT_VERSION="$(git tag --sort='-authordate' | head -n1)"-${{ github.run_number }}
+          echo "FONT_VERSION=$FONT_VERSION" >> $GITHUB_ENV
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
@@ -90,7 +93,7 @@ jobs:
       - name: upload fonts
         uses: actions/upload-artifact@v2
         with:
-          name: dist-fonts-${{ env.DIST_FONT_NAME }}-${{ env.VERSION }}
+          name: dist-fonts-${{ env.DIST_FONT_NAME }}-${{ env.FONT_VERSION }}
           path: |
             dist/
   build-light:
@@ -98,9 +101,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - run: |
-          export VERSION="$(git tag --sort='-authordate' | head -n1)"-${{ github.run_number }}
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "$(git tag --sort='-authordate' | head -n1)"
+          export FONT_VERSION="$(git tag --sort='-authordate' | head -n1)"-${{ github.run_number }}
+          echo "FONT_VERSION=$FONT_VERSION" >> $GITHUB_ENV
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
@@ -129,6 +135,6 @@ jobs:
       - name: upload fonts
         uses: actions/upload-artifact@v2
         with:
-          name: dist-fonts-${{ env.DIST_FONT_NAME }}-${{ env.VERSION }}
+          name: dist-fonts-${{ env.DIST_FONT_NAME }}-${{ env.FONT_VERSION }}
           path: |
             dist/
